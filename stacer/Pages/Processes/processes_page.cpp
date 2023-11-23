@@ -1,6 +1,15 @@
+#include <QWidgetAction>
+#include <iostream>
 #include "processes_page.h"
 #include "ui_processes_page.h"
 #include "utilities.h"
+#include "limit_process_widget.h"
+
+// Static variables for process limiting
+static pid_t staticPID = 0;
+static QString staticUIDSelected = "";
+static QString staticUID = "";
+static std::unordered_map<pid_t, std::string> cpuLimits;
 
 ProcessesPage::~ProcessesPage()
 {
@@ -211,17 +220,253 @@ void ProcessesPage::on_sliderRefresh_valueChanged(const int &i)
     mTimer->setInterval(i * 1000);
 }
 
+/* Limit Process Button */
+void ProcessesPage::on_btnLimitProcess_clicked() // ui file: line 205
+{
+    // Finds the value in the process table selected by the user
+    QModelIndexList selected = ui->tableProcess->selectionModel()->selectedRows();
+
+    if (ui->checkAllProcesses->isChecked()) // If all processes is checked
+    {
+        // No limit can be set.
+        QMessageBox messageBox;
+        messageBox.setText(QString("Please select only one process to limit."));
+        messageBox.setWindowTitle(QString("Invalid Selection"));
+        messageBox.exec();
+    }
+    else if(!selected.isEmpty()) // If the selected process is not empty
+    {
+        /*
+         * Had to use a pointer to the button in this case because
+         * referencing it with the arrow operator makes most of the
+         * following functions view it as two arguments.
+         */
+        QPushButton *btn = ui->btnLimitProcess;
+
+        // Create the menu that is displayed when the button is clicked
+        QMenu *limitProcessMenu = new QMenu(this);
+
+        // Create two new limit process widgets
+        LimitProcessWidget *ramLimit = new LimitProcessWidget("RAM Limit: Bytes");
+        LimitProcessWidget *cpuLimit = new LimitProcessWidget("CPU Limit: %");
+
+        // Create a menu action to associate with RAM Limit
+        QAction *setRAMLimit = limitProcessMenu->addAction("RAM Limit");
+        setRAMLimit->setProperty("widget", QVariant::fromValue<QWidget *>(ramLimit));
+        // Create a menu action to associate with CPU Limit
+        QAction *setCPULimit = limitProcessMenu->addAction("CPU Limit");
+        setCPULimit->setProperty("widget", QVariant::fromValue<QWidget *>(cpuLimit));
+
+        // Connect RAM Limit action to Limit Process button and show it when button is clicked
+        QObject::connect(setRAMLimit, &QAction::triggered, [ramLimit, btn]() {
+            ramLimit->show();
+        });
+        // Connect CPU Limit action to Limit Process button and show it when button is clicked
+        QObject::connect(setCPULimit, &QAction::triggered, [cpuLimit, btn]() {
+            cpuLimit->show();
+        });
+
+        // Place the menu at the button when it is clicked.
+        limitProcessMenu->exec(btn->mapToGlobal(QPoint(0, btn->height())));
+
+        /*
+         * These static variables allow the onLimitProcessConfirm function to be called
+         * from the LimitProcessWidget object.
+         */
+        staticPID = mSeletedRowModel.data(1).toInt(); // The selected PID
+        staticUIDSelected = mSortFilterModel->index(mSeletedRowModel.row(), 4).data(1).toString(); // The selected User ID
+        staticUID = im->getUserName(); // The logged-in User ID
+
+    }
+    else // If no process is selected, inform the user
+    {
+        QMessageBox messageBox;
+        messageBox.setText(QString("Please select a process to limit"));
+        messageBox.setWindowTitle(QString("Invalid Selection"));
+        messageBox.exec();
+    }
+
+}
+
+void ProcessesPage::onLimitProcessConfirm(int limitValue, QString currentOptionName) {
+
+    // If pid contains a valid process ID from a selected process
+    if (staticPID) {
+
+        try {
+
+            // Convert integers to strings
+            std::string processIDStr = std::to_string(staticPID);
+            std::string limitValueStr = std::to_string(limitValue);
+            if (currentOptionName == "RAM Limit: Bytes") {
+                // Construct the prlimit command
+                std::string command = "pkexec prlimit --pid " + processIDStr + " --rss=" + limitValueStr;
+
+                // Convert the command string to a const char* for system function argument
+                const char *command_cstr = command.c_str();
+
+                // Execute the prlimit command
+                int result = std::system(command_cstr);
+
+                // Check if the command executed successfully
+                if (result == 0) {
+                    std::cout << "Resource limit set successfully!" << std::endl;
+                } else {
+                    std::cerr << "Failed to set resource limit!" << std::endl;
+                }
+            }
+            else if (currentOptionName == "CPU Limit: %") {
+                // Install cpulimit if not already installed
+                std::string command = "pkexec apt-get install cpulimit";
+
+                // Convert the command string to a const char* for system function argument
+                const char *command_cstr = command.c_str();
+
+                // Execute the cpulimit install command
+                int result0 = std::system(command_cstr);
+
+                // Construct the cpulimit command
+                std::string command2 = "cpulimit -p " + processIDStr + " -l " + limitValueStr + " -b";
+
+                // Convert the command string to a const char* for system function argument
+                const char *command_cstr2 = command2.c_str();
+
+                // Execute the cpulimit command
+                int result = std::system(command_cstr2);
+
+                // Check if the command executed successfully
+                if (result == 0) {
+                    std::cout << "Resource limit set successfully!" << std::endl;
+                    cpuLimits[staticPID] = command2;
+                } else {
+                    std::cerr << "Failed to set resource limit!" << std::endl;
+                }
+            }
+        } catch (QString &ex) {
+            qCritical() << ex;
+        }
+    }
+}
+
+/* Remove Limit Button */
+void ProcessesPage::on_btnRemoveLimit_clicked() // ui file: line 221
+{
+    // Finds the value in the process table selected by the user
+    QModelIndexList selected = ui->tableProcess->selectionModel()->selectedRows();
+
+    if (ui->checkAllProcesses->isChecked()) // If all processes is checked
+    {
+        // No limit can be set.
+        QMessageBox messageBox;
+        messageBox.setText(QString("Please select only one process to limit."));
+        messageBox.setWindowTitle(QString("Invalid Selection"));
+        messageBox.exec();
+    }
+    else if(!selected.isEmpty()) // If the selected process is not empty
+    {
+        // These static variables are recycled from the limit process functions
+        staticPID = mSeletedRowModel.data(1).toInt(); // The selected PID
+        staticUIDSelected = mSortFilterModel->index(mSeletedRowModel.row(), 4).data(1).toString(); // The selected User ID
+        staticUID = im->getUserName(); // The logged-in User ID
+        /*
+         * Had to use a pointer to the button in this case because
+         * referencing it with the arrow operator makes most of the
+         * following functions view it as two arguments.
+         */
+        QPushButton *btn = ui->btnRemoveLimit;
+
+        // Create the menu that is displayed when the button is clicked
+        QMenu *removeLimitMenu = new QMenu(this);
+
+        // Create a menu action to associate with Remove RAM Limit
+        QAction *removeRAMLimit = removeLimitMenu->addAction("Remove RAM Limit");
+        connect(removeRAMLimit, &QAction::triggered, [=]() {
+
+            if (staticPID) {
+
+                try {
+                        // Convert integers to strings
+                        std::string processIDStr = std::to_string(staticPID);
+
+                        // Construct the prlimit command to remove limit
+                        std::string command = "pkexec prlimit --pid " + processIDStr + " --rss=unlimited";
+
+                        // Convert the command string to a const char* for system function argument
+                        const char *command_cstr = command.c_str();
+
+                        // Execute the prlimit command
+                        int result = std::system(command_cstr);
+
+                        // Check if the command executed successfully
+                        if (result == 0) {
+                            std::cout << "Resource limit removed successfully!" << std::endl;
+                        } else {
+                            std::cerr << "Failed to remove resource limit!" << std::endl;
+                        }
+
+                } catch (QString &ex) {
+                    qCritical() << ex;
+                }
+            }
+        });
+        // Create a menu action to associate with Remove CPU Limit
+        QAction *removeCPULimit = removeLimitMenu->addAction("Remove CPU Limit");
+        connect(removeCPULimit, &QAction::triggered, [=]() {
+            if (staticPID) {
+
+                try {
+                        // Construct the kill command for cpulimit
+                        std::string command = "pkexec pkill -f \"" + cpuLimits[staticPID] + "\"";
+
+                        // Convert the command string to a const char* for system function argument
+                        const char *command_cstr = command.c_str();
+
+                        // Execute the kill command
+                        int result = std::system(command_cstr);
+                        // Check if the command executed successfully
+                        if (result == 15) {
+                            std::cout << "Resource limit removed successfully!" << std::endl;
+                        } else {
+                            std::cerr << "Failed to remove resource limit!" << std::endl;
+                        }
+
+                } catch (QString &ex) {
+                    qCritical() << ex;
+                }
+            }
+        });
+
+        // Place the menu at the button when it is clicked.
+        removeLimitMenu->exec(btn->mapToGlobal(QPoint(0, btn->height())));
+
+    }
+    else // If no process is selected, inform the user
+    {
+        QMessageBox messageBox;
+        messageBox.setText(QString("Please select a process to limit"));
+        messageBox.setWindowTitle(QString("Invalid Selection"));
+        messageBox.exec();
+    }
+
+}
+
+/* End Process Button */
 void ProcessesPage::on_btnEndProcess_clicked()
 {
+    // Captures the PID for the highlighted process
     pid_t pid = mSeletedRowModel.data(1).toInt();
-
+    // If pid contains a valid process ID from a selected process
     if (pid) {
+        // Retrieve's the username from the table
         QString selectedUname = mSortFilterModel->index(mSeletedRowModel.row(), 4).data(1).toString();
 
         try {
+            // Check if table username matches user logged into Linux
             if (selectedUname == im->getUserName()) {
+                // Call exec as that user
                 CommandUtil::exec("kill", { QString::number(pid) });
             } else {
+                // Otherwise execute the call as superuser
                 CommandUtil::sudoExec("kill", { QString::number(pid) });
             }
         } catch (QString &ex) {
