@@ -124,4 +124,34 @@ QList<Process> InfoManager::getProcesses() const
     return pi.getProcessList();
 }
 
+int InfoManager::getNiceness(pid_t pid)
+{
+    // Construct the path to the stat file for the specified process ID
+    QString statFilePath = QString("/proc/%1/stat").arg(pid);
+
+    // Open the stat file for reading
+    QFile statFile(statFilePath);
+    if (statFile.open(QIODevice::ReadOnly)) {
+        // Read the contents of the stat file
+        QString statData = statFile.readAll();
+
+        // Close the file
+        statFile.close();
+
+        // Split the stat data into fields
+        QStringList statFields = statData.split(' ');
+
+        // The 18th field (index 17) corresponds to the niceness value
+        if (statFields.length() > 17) {
+            bool ok;
+            int niceness = statFields[17].toInt(&ok);
+            if (ok) {
+                return niceness;
+            }
+        }
+    }
+
+    // Return a default value or an indication of failure
+    return -1;
+}
 

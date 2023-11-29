@@ -1,20 +1,33 @@
+// processes_page.cpp
 #include <QWidgetAction>
 #include <iostream>
 #include "processes_page.h"
 #include "ui_processes_page.h"
 #include "utilities.h"
 #include "limit_process_widget.h"
+#include <QColor>
+#include <QDebug>
+#include <QStyledItemDelegate>
+#include <QPainter>
+
+
 
 // Static variables for process limiting
 static pid_t staticPID = 0;
 static QString staticUIDSelected = "";
 static QString staticUID = "";
 static std::unordered_map<pid_t, std::string> cpuLimits;
+static const int NICENESS_COLUMN = 12;
+
+
+
+
 
 ProcessesPage::~ProcessesPage()
 {
     delete ui;
 }
+
 
 ProcessesPage::ProcessesPage(QWidget *parent) :
   QWidget(parent),
@@ -32,15 +45,16 @@ ProcessesPage::ProcessesPage(QWidget *parent) :
 void ProcessesPage::init()
 {    
     mHeaders = QStringList {
-        "PID", tr("Resident Memory"), tr("%Memory"), tr("Virtual Memory"),
-        tr("User"), "%CPU", tr("Start Time"), tr("State"), tr("Group"),
-        tr("Nice"), tr("CPU Time"), tr("Session"), tr("Process")
-    };
+           "PID", tr("Resident Memory"), tr("%Memory"), tr("Virtual Memory"),
+           tr("User"), "%CPU", tr("Start Time"), tr("State"), tr("Group"),
+           tr("Nice"), tr("CPU Time"), tr("Session"), tr("Niceness"), tr("Process")
+       };
 
     // slider settings
     ui->sliderRefresh->setRange(1, 10);
     ui->sliderRefresh->setPageStep(1);
     ui->sliderRefresh->setSingleStep(1);
+
 
     // Table settings
     mSortFilterModel->setSourceModel(mItemModel);
@@ -58,6 +72,13 @@ void ProcessesPage::init()
     ui->tableProcess->horizontalHeader()->setCursor(Qt::PointingHandCursor);
 
     ui->tableProcess->horizontalHeader()->resizeSection(0, 70);
+
+    // Add the "Niceness" header to the mHeaders list
+    mHeaders << tr("Niceness");
+
+    // Set the item delegate for the Niceness column
+    ui->tableProcess->setItemDelegateForColumn(NICENESS_COLUMN, new NicenessDelegate(this));
+
 
     loadProcesses();
 
@@ -114,7 +135,6 @@ void ProcessesPage::loadProcesses()
 
     QList<Process> processes = im->getProcesses();
     QString username = im->getUserName();
-
 
     if (ui->checkAllProcesses->isChecked()) {
         for (const Process &proc : processes) {
@@ -202,12 +222,21 @@ QList<QStandardItem*> ProcessesPage::createRow(const Process &proc)
     cmd_i->setData(proc.getCmd(), data);
     cmd_i->setData(QString("<p>%1</p>").arg(proc.getCmd()), Qt::ToolTipRole);
 
+
+    QStandardItem* nicenessItem = new QStandardItem("");
+    nicenessItem->setData(proc.getNice(), Qt::UserRole);
+    nicenessItem->setData(ProcessesPage::determineNicenessColor(proc.getNice()), Qt::BackgroundColorRole);
+
+    // Set alignment for Niceness column
+    nicenessItem->setTextAlignment(Qt::AlignCenter);
+
     row << pid_i << rss_i << pmem_i << vsize_i << uname_i << pcpu_i
         << starttime_i << state_i << group_i << nice_i << cpuTime_i
-        << session_i << cmd_i;
+        << session_i << nicenessItem << cmd_i;
 
     return row;
 }
+
 
 void ProcessesPage::on_txtProcessSearch_textChanged(const QString &val)
 {
@@ -222,7 +251,6 @@ void ProcessesPage::on_sliderRefresh_valueChanged(const int &i)
     ui->lblRefresh->setText(tr("Refresh (%1)").arg(i));
     mTimer->setInterval(i * 1000);
 }
-
 /* Limit Process Button */
 void ProcessesPage::on_btnLimitProcess_clicked() // ui file: line 205
 {
@@ -274,7 +302,7 @@ void ProcessesPage::on_btnLimitProcess_clicked() // ui file: line 205
 
         /*
          * These static variables allow the onLimitProcessConfirm function to be called
-         * from the LimitProcessWidget object.
+         * from the LimitProcessWidget object.#include <QDebug>
          */
         staticPID = mSeletedRowModel.data(1).toInt(); // The selected PID
         staticUIDSelected = mSortFilterModel->index(mSeletedRowModel.row(), 4).data(1).toString(); // The selected User ID
@@ -485,7 +513,8 @@ void ProcessesPage::on_tableProcess_customContextMenuRequested(const QPoint &pos
     QAction *action = mHeaderMenu.exec(globalPos);
 
     if (action) {
-        ui->tableProcess->horizontalHeader()->setSectionHidden(action->data().toInt(), ! action->isChecked());
+        int column = action->data().toInt();
+        ui->tableProcess->horizontalHeader()->setSectionHidden(column, !action->isChecked());
     }
 }
 
@@ -512,16 +541,56 @@ void ProcessesPage::on_btnSetCPUPriority_clicked()
             // Determine the selected CPU priority and set it accordingly
             if (selectedAction == setLowPriority) {
                 // Set low priority (nice value = 10)
-                CommandUtil::sudoExec("nice", { "-n", "10", QString::number(pid) });
+                CommandUtil::sudoExec("renice", { "-n", "10", "-p", QString::number(pid) });
             } else if (selectedAction == setMediumPriority) {
                 // Set medium priority (nice value = 0)
-                CommandUtil::sudoExec("nice", { QString::number(pid) });
+                CommandUtil::sudoExec("renice", { "-n", "0", "-p", QString::number(pid) });
             } else if (selectedAction == setHighPriority) {
                 // Set high priority (nice value = -10)
-                CommandUtil::sudoExec("nice", { "-n", "-10", QString::number(pid) });
+                CommandUtil::sudoExec("renice", { "-n", "-10", "-p", QString::number(pid) });
             }
+
+            // After changing priority, update the color of the Niceness column
+            int niceness = im->getNiceness(pid); // Use the correct function from InfoManager
+             updateNicenessColor(pid, niceness);
+
         } catch (QString &ex) {
             qCritical() << ex;
         }
+    }
+}
+
+
+
+
+void ProcessesPage::updateNicenessColor(pid_t pid, int niceness)
+{
+ // Find the row index of the process with the given PID
+ int rowIndex = -1;
+ for (int i = 0; i < mSortFilterModel->rowCount(); ++i) {
+     if (mSortFilterModel->index(i, 0).data(1).toInt() == pid) {
+         rowIndex = i;
+         break;
+     }
+ }
+
+ if (rowIndex != -1) {
+     // Update the color of the Niceness column for the specified row
+     QModelIndex nicenessIndex = mItemModel->index(rowIndex, NICENESS_COLUMN);
+     QColor nicenessColor = determineNicenessColor(niceness);
+     mItemModel->setData(nicenessIndex, nicenessColor, Qt::BackgroundColorRole);
+ }
+}
+
+
+QColor ProcessesPage::determineNicenessColor(int niceness)
+{
+    // Determine the color based on niceness value
+    if (niceness > 0) {
+        return QColor(Qt::green); // Positive niceness values are green
+    } else if (niceness < 0) {
+        return QColor(Qt::red);   // Negative niceness values are red
+    } else {
+        return QColor(Qt::yellow); // Default (niceness = 0) is yellow
     }
 }

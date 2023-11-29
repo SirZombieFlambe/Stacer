@@ -40,6 +40,9 @@ public:
     QList<Process> getProcesses() const;
     QString getUserName() const;
 
+    //updated for niceness
+    int getNiceness(pid_t pid);
+
 private:
     static InfoManager *instance;
 
