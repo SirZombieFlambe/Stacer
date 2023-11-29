@@ -70,6 +70,9 @@ void ProcessesPage::init()
     connect(ui->tableProcess->horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(on_tableProcess_customContextMenuRequested(const QPoint&)));
 
+    // Added for the CPU Priority
+    connect(ui->btnSetCPUPriority, &QPushButton::clicked, this, &ProcessesPage::on_btnSetCPUPriority_clicked);
+
     loadHeaderMenu();
 
     Utilities::addDropShadow(ui->btnEndProcess, 60);
@@ -483,5 +486,42 @@ void ProcessesPage::on_tableProcess_customContextMenuRequested(const QPoint &pos
 
     if (action) {
         ui->tableProcess->horizontalHeader()->setSectionHidden(action->data().toInt(), ! action->isChecked());
+    }
+}
+
+
+
+void ProcessesPage::on_btnSetCPUPriority_clicked()
+{
+    // Retrieve the selected process PID
+    pid_t pid = mSeletedRowModel.data(1).toInt();
+
+    if (pid) {
+        try {
+            // Create a menu for setting CPU priority
+            QMenu cpuPriorityMenu;
+
+            // Create actions for low, medium, and high priorities
+            QAction *setLowPriority = cpuPriorityMenu.addAction("Low Priority");
+            QAction *setMediumPriority = cpuPriorityMenu.addAction("Medium Priority");
+            QAction *setHighPriority = cpuPriorityMenu.addAction("High Priority");
+
+            // Execute the menu at the cursor position
+            QAction *selectedAction = cpuPriorityMenu.exec(QCursor::pos());
+
+            // Determine the selected CPU priority and set it accordingly
+            if (selectedAction == setLowPriority) {
+                // Set low priority (nice value = 10)
+                CommandUtil::sudoExec("nice", { "-n", "10", QString::number(pid) });
+            } else if (selectedAction == setMediumPriority) {
+                // Set medium priority (nice value = 0)
+                CommandUtil::sudoExec("nice", { QString::number(pid) });
+            } else if (selectedAction == setHighPriority) {
+                // Set high priority (nice value = -10)
+                CommandUtil::sudoExec("nice", { "-n", "-10", QString::number(pid) });
+            }
+        } catch (QString &ex) {
+            qCritical() << ex;
+        }
     }
 }

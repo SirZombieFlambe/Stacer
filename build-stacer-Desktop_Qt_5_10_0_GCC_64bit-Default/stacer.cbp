@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="stacer"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\..\;CMake Files\..\..\..\..\..\Qt5.10.0\;CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\;CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\;CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\;CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\cmake\;CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\cmake\Qt5LinguistTools\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="stacer">
+				<Option output="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/stacer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/stacer-core"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Processes"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Settings"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/SystemCleaner"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Uninstaller"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-14/lib/clang/14.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 stacer"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="stacer/fast">
+				<Option output="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/stacer" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/stacer-core"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Processes"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Settings"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/SystemCleaner"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Uninstaller"/>
+					<Add directory="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+					<Add directory="/usr/lib/llvm-14/lib/clang/14.0.0/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 stacer/fast"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="list_install_components">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 list_install_components"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 install"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/strip">
+				<Option working_dir="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 install/strip"/>
+					<CompileFile command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j4 -f &quot;/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/build-stacer-Desktop_Qt_5_10_0_GCC_64bit-Default/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/app_manager.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/app_manager.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/info_manager.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/info_manager.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/setting_manager.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/setting_manager.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/tool_manager.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Managers/tool_manager.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_edit.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_edit.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_manager_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_manager_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_repository_item.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/AptSourceManager/apt_source_repository_item.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/circlebar.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/circlebar.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/dashboard_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/dashboard_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/linebar.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Dashboard/linebar.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/appearance_settings.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/appearance_settings.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/gnome_settings_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/gnome_settings_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/unity_settings.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/unity_settings.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/window_manager_settings.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/GnomeSettings/window_manager_settings.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Processes/processes_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Processes/processes_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources/history_chart.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources/history_chart.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources/resources_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Resources/resources_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services/service_item.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services/service_item.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services/services_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Services/services_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Settings/settings_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Settings/settings_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_app.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_app.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_app_edit.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_app_edit.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_apps_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/StartupApps/startup_apps_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/SystemCleaner/system_cleaner_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/SystemCleaner/system_cleaner_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Uninstaller/uninstaller_page.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/Pages/Uninstaller/uninstaller_page.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/app.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/app.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/feedback.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/feedback.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/limit_process_widget.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/limit_process_widget.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/main.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/signal_mapper.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/signal_mapper.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/sliding_stacked_widget.cpp">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/sliding_stacked_widget.h">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/static.qrc">
+			<Option target="stacer"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/../../../../../Qt5.10.0/5.10.0/gcc_64/lib/cmake/Qt5LinguistTools/Qt5LinguistToolsConfig.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\cmake\Qt5LinguistTools\"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/../../../../../Qt5.10.0/5.10.0/gcc_64/lib/cmake/Qt5LinguistTools/Qt5LinguistToolsConfigVersion.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\cmake\Qt5LinguistTools\"/>
+		</Unit>
+		<Unit filename="/home/zakerydesktop/Desktop/codingDev/StacerDev/Stacer/stacer/../../../../../Qt5.10.0/5.10.0/gcc_64/lib/cmake/Qt5LinguistTools/Qt5LinguistToolsMacros.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\..\Qt5.10.0\5.10.0\gcc_64\lib\cmake\Qt5LinguistTools\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

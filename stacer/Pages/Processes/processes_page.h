@@ -37,6 +37,7 @@ private slots:
     void on_btnLimitProcess_clicked(); // ui file: line 205
     void on_btnRemoveLimit_clicked(); // ui file: line 221
     void on_btnEndProcess_clicked(); // ui file: line 237
+    void on_btnSetCPUPriority_clicked();
     void on_tableProcess_customContextMenuRequested(const QPoint &pos);
 
 private:

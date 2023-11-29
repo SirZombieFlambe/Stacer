@@ -202,7 +202,23 @@
         </property>
        </spacer>
       </item>
-      <item>                                                # Limit process button
+      <item>
+       <widget class="QPushButton" name="btnSetCPUPriority">
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="accessibleName">
+         <string>primary</string>
+        </property>
+        <property name="text">
+         <string>CPU Priority</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="btnLimitProcess">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -218,7 +234,7 @@
         </property>
        </widget>
       </item>
-      <item>                                                # Remove limit button
+      <item>
        <widget class="QPushButton" name="btnRemoveLimit">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
@@ -234,7 +250,7 @@
         </property>
        </widget>
       </item>
-      <item>                                                # End process button
+      <item>
        <widget class="QPushButton" name="btnEndProcess">
         <property name="cursor">
          <cursorShape>PointingHandCursor</cursorShape>
