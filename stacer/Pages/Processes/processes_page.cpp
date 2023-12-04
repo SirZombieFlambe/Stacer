@@ -532,9 +532,7 @@ void ProcessesPage::on_btnSetCPUPriority_clicked()
 
             // Create actions for low, medium, and high priorities
             QAction *setLowPriority = cpuPriorityMenu.addAction("Low Priority");
-            QAction *setMediumLowPriority = cpuPriorityMenu.addAction("Medium Low Priority");
             QAction *setMediumPriority = cpuPriorityMenu.addAction("Medium Priority");
-            QAction *setMediumHighPriority = cpuPriorityMenu.addAction("Medium High Priority");
             QAction *setHighPriority = cpuPriorityMenu.addAction("High Priority");
 
             // Execute the menu at the cursor position
@@ -542,33 +540,18 @@ void ProcessesPage::on_btnSetCPUPriority_clicked()
 
             // Determine the selected CPU priority and set it accordingly
             if (selectedAction == setLowPriority) {
-
-                // Set low priority (nice value = 20)
-                CommandUtil::sudoExec("renice", { "-n", "20", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setMediumLowPriority) {
-
-                // Set medium low priority (nice value = 10)
+                // Set low priority (nice value = 10)
                 CommandUtil::sudoExec("renice", { "-n", "10", "-p", QString::number(pid) });
-
             } else if (selectedAction == setMediumPriority) {
-
                 // Set medium priority (nice value = 0)
                 CommandUtil::sudoExec("renice", { "-n", "0", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setMediumHighPriority) {
-
-                // Set  medium high priority (nice value = -10)
-                CommandUtil::sudoExec("renice", { "-n", "-10", "-p", QString::number(pid) });
-
             } else if (selectedAction == setHighPriority) {
-
-                // Set high priority (nice value = -20)
-                CommandUtil::sudoExec("renice", { "-n", "-20", "-p", QString::number(pid) });
+                // Set high priority (nice value = -10)
+                CommandUtil::sudoExec("renice", { "-n", "-10", "-p", QString::number(pid) });
             }
 
             // After changing priority, update the color of the Niceness column
-            int niceness = im->getNiceness(pid); // Use the correct function from InfoManager Made by Zakery
+            int niceness = im->getNiceness(pid); // Use the correct function from InfoManager
              updateNicenessColor(pid, niceness);
 
         } catch (QString &ex) {
@@ -603,15 +586,11 @@ void ProcessesPage::updateNicenessColor(pid_t pid, int niceness)
 QColor ProcessesPage::determineNicenessColor(int niceness)
 {
     // Determine the color based on niceness value
-    if (niceness > 10) {
-        return QColor(Qt::green); // Lowest Priority Colour
-    } else if (niceness > 0) {
-        return QColor(Qt::blue); // Medium Low Priority Colour
-    } else if (niceness == 0) {
-        return QColor(Qt::gray); // Medium Priority Colour
-    } else if (niceness >= -10) {
-        return QColor(Qt::yellow); // Medium High Priority Colour
+    if (niceness > 0) {
+        return QColor(Qt::green); // Positive niceness values are green
+    } else if (niceness < 0) {
+        return QColor(Qt::red);   // Negative niceness values are red
     } else {
-        return QColor(Qt::red); //Highest Priority Colour
+        return QColor(Qt::yellow); // Default (niceness = 0) is yellow
     }
 }
