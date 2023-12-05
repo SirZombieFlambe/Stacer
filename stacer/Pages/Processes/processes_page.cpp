@@ -10,8 +10,6 @@
 #include <QStyledItemDelegate>
 #include <QPainter>
 
-
-
 // Static variables for process limiting
 static pid_t staticPID = 0;
 static QString staticUIDSelected = "";
@@ -19,15 +17,10 @@ static QString staticUID = "";
 static std::unordered_map<pid_t, std::string> cpuLimits;
 static const int NICENESS_COLUMN = 12;
 
-
-
-
-
 ProcessesPage::~ProcessesPage()
 {
     delete ui;
 }
-
 
 ProcessesPage::ProcessesPage(QWidget *parent) :
   QWidget(parent),
@@ -73,26 +66,19 @@ void ProcessesPage::init()
 
     ui->tableProcess->horizontalHeader()->resizeSection(0, 70);
 
-    // Add the "Niceness" header to the mHeaders list
-    mHeaders << tr("Niceness");
-
     // Set the item delegate for the Niceness column
     ui->tableProcess->setItemDelegateForColumn(NICENESS_COLUMN, new NicenessDelegate(this));
-
 
     loadProcesses();
 
     connect(mTimer, &QTimer::timeout, this, &ProcessesPage::loadProcesses);
-    mTimer->setInterval(1000);
+    mTimer->setInterval(10000);
     mTimer->start();
 
     ui->tableProcess->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 
     connect(ui->tableProcess->horizontalHeader(), SIGNAL(customContextMenuRequested(const QPoint&)),
         this, SLOT(on_tableProcess_customContextMenuRequested(const QPoint&)));
-
-    // Added for the CPU Priority
-    connect(ui->btnSetCPUPriority, &QPushButton::clicked, this, &ProcessesPage::on_btnSetCPUPriority_clicked);
 
     loadHeaderMenu();
 
@@ -125,8 +111,8 @@ void ProcessesPage::loadHeaderMenu()
     }
 }
 
-void ProcessesPage::loadProcesses()
-{
+void ProcessesPage::loadProcesses() {
+
     QModelIndexList selecteds = ui->tableProcess->selectionModel()->selectedRows();
 
     mItemModel->removeRows(0, mItemModel->rowCount());
@@ -137,23 +123,20 @@ void ProcessesPage::loadProcesses()
     QString username = im->getUserName();
 
     if (ui->checkAllProcesses->isChecked()) {
-        for (const Process &proc : processes) {
+        for (const Process &proc: processes) {
             mItemModel->appendRow(createRow(proc));
         }
-    } else  {
-        for (const Process &proc : processes) {
+    } else {
+        for (const Process &proc: processes) {
             if (username == proc.getUname()) {
                 mItemModel->appendRow(createRow(proc));
             }
         }
     }
 
-    ui->lblProcessTitle->setText(tr("Processes (%1)").arg(mItemModel->rowCount()));
-
     // selected item
     if(! selecteds.isEmpty()) {
         mSeletedRowModel = selecteds.first();
-
         for (int i = 0; i < mSortFilterModel->rowCount(); ++i) {
             if (mSortFilterModel->index(i, 0).data(1).toInt() == mSeletedRowModel.data(1).toInt()) {
                 ui->tableProcess->selectRow(i);
@@ -162,6 +145,8 @@ void ProcessesPage::loadProcesses()
     } else {
         mSeletedRowModel = QModelIndex();
     }
+    ui->lblProcessTitle->setText(tr("Processes (%1)").arg(mItemModel->rowCount()));
+
 }
 
 QList<QStandardItem*> ProcessesPage::createRow(const Process &proc)
@@ -234,6 +219,8 @@ QList<QStandardItem*> ProcessesPage::createRow(const Process &proc)
         << starttime_i << state_i << group_i << nice_i << cpuTime_i
         << session_i << nicenessItem << cmd_i;
 
+
+
     return row;
 }
 
@@ -251,6 +238,7 @@ void ProcessesPage::on_sliderRefresh_valueChanged(const int &i)
     ui->lblRefresh->setText(tr("Refresh (%1)").arg(i));
     mTimer->setInterval(i * 1000);
 }
+
 /* Limit Process Button */
 void ProcessesPage::on_btnLimitProcess_clicked() // ui file: line 205
 {
@@ -524,61 +512,74 @@ void ProcessesPage::on_btnSetCPUPriority_clicked()
 {
     // Retrieve the selected process PID
     pid_t pid = mSeletedRowModel.data(1).toInt();
+    // Button Alias
+    QPushButton *btn = ui->btnSetCPUPriority;
+    // Create a menu for setting CPU priority
+    QMenu *cpuPriorityMenu = new QMenu(this);
 
-    if (pid) {
-        try {
-            // Create a menu for setting CPU priority
-            QMenu cpuPriorityMenu;
-
-            // Create actions for low, medium, and high priorities
-            QAction *setLowPriority = cpuPriorityMenu.addAction("Low Priority");
-            QAction *setMediumLowPriority = cpuPriorityMenu.addAction("Medium Low Priority");
-            QAction *setMediumPriority = cpuPriorityMenu.addAction("Medium Priority");
-            QAction *setMediumHighPriority = cpuPriorityMenu.addAction("Medium High Priority");
-            QAction *setHighPriority = cpuPriorityMenu.addAction("High Priority");
-
-            // Execute the menu at the cursor position
-            QAction *selectedAction = cpuPriorityMenu.exec(QCursor::pos());
-
-            // Determine the selected CPU priority and set it accordingly
-            if (selectedAction == setLowPriority) {
-
-                // Set low priority (nice value = 20)
-                CommandUtil::sudoExec("renice", { "-n", "20", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setMediumLowPriority) {
-
-                // Set medium low priority (nice value = 10)
-                CommandUtil::sudoExec("renice", { "-n", "10", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setMediumPriority) {
-
-                // Set medium priority (nice value = 0)
-                CommandUtil::sudoExec("renice", { "-n", "0", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setMediumHighPriority) {
-
-                // Set  medium high priority (nice value = -10)
-                CommandUtil::sudoExec("renice", { "-n", "-10", "-p", QString::number(pid) });
-
-            } else if (selectedAction == setHighPriority) {
-
-                // Set high priority (nice value = -20)
-                CommandUtil::sudoExec("renice", { "-n", "-20", "-p", QString::number(pid) });
+    // Create actions for low, medium, and high priorities
+    QAction *setLowPriority = cpuPriorityMenu->addAction("Low Priority");
+    connect(setLowPriority, &QAction::triggered, [=]() {
+        if (pid) {
+            try {
+                CommandUtil::sudoExec("renice", {"-n", "20", "-p", QString::number(pid)});
+            } catch (QString &ex) {
+                qCritical() << ex;
             }
-
-            // After changing priority, update the color of the Niceness column
-            int niceness = im->getNiceness(pid); // Use the correct function from InfoManager Made by Zakery
-             updateNicenessColor(pid, niceness);
-
-        } catch (QString &ex) {
-            qCritical() << ex;
         }
-    }
+    });
+
+    QAction *setMediumLowPriority = cpuPriorityMenu->addAction("Medium Low Priority");
+    connect(setMediumLowPriority, &QAction::triggered, [=]() {
+        if (pid) {
+            try {
+                CommandUtil::sudoExec("renice", { "-n", "10", "-p", QString::number(pid) });
+            } catch (QString &ex) {
+                qCritical() << ex;
+            }
+        }
+    });
+
+    QAction *setMediumPriority = cpuPriorityMenu->addAction("Medium Priority");
+    connect(setMediumPriority, &QAction::triggered, [=]() {
+        if (pid) {
+            try {
+                CommandUtil::sudoExec("renice", { "-n", "0", "-p", QString::number(pid) });
+            } catch (QString &ex) {
+                qCritical() << ex;
+            }
+        }
+    });
+
+    QAction *setMediumHighPriority = cpuPriorityMenu->addAction("Medium High Priority");
+    connect(setMediumHighPriority, &QAction::triggered, [=]() {
+        if (pid) {
+            try {
+                CommandUtil::sudoExec("renice", { "-n", "-10", "-p", QString::number(pid) });
+            } catch (QString &ex) {
+                qCritical() << ex;
+            }
+        }
+    });
+
+    QAction *setHighPriority = cpuPriorityMenu->addAction("High Priority");
+    connect(setHighPriority, &QAction::triggered, [=]() {
+        if (pid) {
+            try {
+                CommandUtil::sudoExec("renice", { "-n", "-20", "-p", QString::number(pid) });
+            } catch (QString &ex) {
+                qCritical() << ex;
+            }
+        }
+    });
+
+    // Execute the menu at the cursor position
+    cpuPriorityMenu->exec(btn->mapToGlobal(QPoint(0, btn->height())));
+
+    // After changing priority, update the color of the Niceness column
+    int niceness = im->getNiceness(pid); // Use the correct function from InfoManager Made by Zakery
+    updateNicenessColor(pid, niceness);
 }
-
-
-
 
 void ProcessesPage::updateNicenessColor(pid_t pid, int niceness)
 {

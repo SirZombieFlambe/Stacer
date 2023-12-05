@@ -47,7 +47,6 @@ private slots:
     QColor determineNicenessColor(int niceness);
     void updateNicenessColor(pid_t pid, int niceness);
 
-
 private:
     Ui::ProcessesPage *ui;
     QStandardItemModel *mItemModel;
@@ -58,6 +57,7 @@ private:
     QTimer *mTimer;
     InfoManager *im;
     int limitPass;
+    bool needReselect = false;
 };
 
 
